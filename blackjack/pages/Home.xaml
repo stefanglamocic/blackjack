@@ -1,0 +1,43 @@
+﻿<Page x:Class="blackjack.pages.Home"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:blackjack.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Home">
+
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#FF662017"/>
+            <Setter Property="Foreground" Value="#c1903c"/>
+            <Setter Property="BorderBrush" Value="#FF21100E"/>
+        </Style>
+
+        <Style TargetType="Button"></Style>
+
+        <Style TargetType="TextBlock" x:Key="TitleStyle"></Style>
+    </Page.Resources>
+
+    <Grid Background="#FF5C0D03">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Viewbox Grid.Row="0">
+            <TextBlock 
+                Style="{StaticResource TitleStyle}"
+                Margin="10">
+                Blackjack</TextBlock>
+        </Viewbox>
+
+        <Viewbox Grid.Row="1">
+            <StackPanel Orientation="Horizontal" Margin="48">
+                <TextBox x:Name="tbPlayerName" Margin="0, 0, 6, 0" Width="80"></TextBox>
+                <Button Click="Button_Click">Dalje</Button>
+            </StackPanel>
+        </Viewbox>
+    </Grid>
+</Page>
