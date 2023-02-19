@@ -9,18 +9,38 @@
       Title="Home">
 
     <Page.Resources>
-        <Style TargetType="TextBox">
-            <Setter Property="Background" Value="#FF662017"/>
-            <Setter Property="Foreground" Value="#c1903c"/>
-            <Setter Property="BorderBrush" Value="#FF21100E"/>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource ForegroundColor}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="Text" Value="Username..."/>
+            <Setter Property="Opacity" Value="0.3"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource YellowDark}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource Green}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <Style TargetType="Button"></Style>
-
-        <Style TargetType="TextBlock" x:Key="TitleStyle"></Style>
+        <Style TargetType="TextBlock" x:Key="TitleStyle">
+            <Setter Property="Foreground" Value="{StaticResource TitleColor}"/>
+        </Style>
     </Page.Resources>
 
-    <Grid Background="#FF5C0D03">
+    <Grid Background="{StaticResource HomeBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="1*"/>
@@ -30,13 +50,39 @@
             <TextBlock 
                 Style="{StaticResource TitleStyle}"
                 Margin="10">
-                Blackjack</TextBlock>
+                    Blackjack
+            </TextBlock>
         </Viewbox>
 
         <Viewbox Grid.Row="1">
             <StackPanel Orientation="Horizontal" Margin="48">
-                <TextBox x:Name="tbPlayerName" Margin="0, 0, 6, 0" Width="80"></TextBox>
-                <Button Click="Button_Click">Dalje</Button>
+                <TextBox x:Name="tbPlayerName" Margin="0, 0, 6, 0" Width="80" 
+                         GotFocus="tbPlayerName_GotFocus" LostFocus="tbPlayerName_LostFocus">
+                </TextBox>
+                <Button Template="{StaticResource RoundButton}" Click="Button_Click" Width="19" 
+                        Background="{StaticResource YellowDark}"
+                        Foreground="{StaticResource Green}"
+                        FontSize="7">
+                    <Image Source="/assets/arrow-icon.png" Stretch="Fill" Opacity="0.6"/>
+                    <!--
+                    <Style TargetType="Button">
+                        <Setter Property="Content">
+                            <Setter.Value>
+                                <Image Source="/assets/arrow-icon.png" Stretch="Fill" Opacity="0.6"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Image Source="/assets/arrow-icon.png" Stretch="Fill" Opacity="1"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    -->
+                </Button>
             </StackPanel>
         </Viewbox>
     </Grid>

@@ -4,6 +4,42 @@
              xmlns:local="clr-namespace:blackjack"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="BackgroundColor" Color="#FF662017"/>
+        <SolidColorBrush x:Key="ForegroundColor" Color="#E4D47D"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#FF21100E"/>
+
+        <SolidColorBrush x:Key="YellowDark" Color="#C1903C"/>
+        <SolidColorBrush x:Key="YellowLight" Color="#E4D47D"/>
+        <SolidColorBrush x:Key="Green" Color="#147144"/>
+
+        <LinearGradientBrush x:Key="TitleColor" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#A07823" Offset="0.0"/>
+            <GradientStop Color="#C1903C" Offset="0.25"/>
+            <GradientStop Color="#E4D47D" Offset="0.47"/>
+            <GradientStop Color="#C1903C" Offset="0.65"/>
+            <GradientStop Color="#A07823" Offset="0.84"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="HomeBackgroundColor" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#FF662017" Offset="0.0"/>
+            <GradientStop Color="#FF530D04" Offset="0.77"/>
+            <GradientStop Color="#FF530D04" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <ControlTemplate x:Key="RoundButton" TargetType="Button">
+            <Grid>
+                <Ellipse Fill="{TemplateBinding Background}"/>
+                <Ellipse x:Name="Border" Stroke="{TemplateBinding Foreground}" StrokeThickness="1" Opacity="0.6"/>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="Border" Property="Opacity" Value="1"/>
+                </Trigger>
+                <Trigger Property="Button.IsPressed" Value="True">
+                    <Setter TargetName="Border" Property="Opacity" Value="0.7"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
     </Application.Resources>
 </Application>

@@ -28,12 +28,30 @@ namespace blackjack.pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string playerName = tbPlayerName.Text.Trim();
-            if (!String.IsNullOrEmpty(playerName))
+            if (!String.IsNullOrEmpty(playerName) && !playerName.Equals("Username..."))
             {
                 NavigationService.Navigate(new Game(playerName));
             }
             else
                 MessageBox.Show("Unesite ime");
+        }
+
+        private void tbPlayerName_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(tbPlayerName.Text.Equals("Username..."))
+            {
+                tbPlayerName.Text = "";
+                tbPlayerName.Opacity = 1;
+            }
+        }
+
+        private void tbPlayerName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if(String.IsNullOrEmpty(tbPlayerName.Text))
+            {
+                tbPlayerName.Text = "Username...";
+                tbPlayerName.Opacity = 0.3;
+            }
         }
     }
 }
