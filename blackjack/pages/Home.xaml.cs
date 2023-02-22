@@ -23,6 +23,7 @@ namespace blackjack.pages
         public Home()
         {
             InitializeComponent();
+            MainWindow.UpdateWindowSize(800, 600);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -52,6 +53,18 @@ namespace blackjack.pages
                 tbPlayerName.Text = "Username...";
                 tbPlayerName.Opacity = 0.3;
             }
+        }
+
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Arrow.Opacity = 1;
+            ((Button)sender).Background = Application.Current.Resources["YellowLight"] as SolidColorBrush;
+        }
+
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Arrow.Opacity = 0.6;
+            ((Button)sender).Background = Application.Current.Resources["YellowDark"] as SolidColorBrush;
         }
     }
 }

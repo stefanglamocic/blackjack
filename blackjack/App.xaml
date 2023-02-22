@@ -38,6 +38,11 @@
                 </Trigger>
                 <Trigger Property="Button.IsPressed" Value="True">
                     <Setter TargetName="Border" Property="Opacity" Value="0.7"/>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
+                        </Setter.Value>
+                    </Setter>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>

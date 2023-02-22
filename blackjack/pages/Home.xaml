@@ -62,8 +62,8 @@
                 <Button Template="{StaticResource RoundButton}" Click="Button_Click" Width="19" 
                         Background="{StaticResource YellowDark}"
                         Foreground="{StaticResource Green}"
-                        FontSize="7">
-                    <Image Source="/assets/arrow-icon.png" Stretch="Fill" Opacity="0.6"/>
+                        FontSize="7" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
+                    <Image x:Name="Arrow" Source="/assets/arrow-icon.png" Stretch="Fill" Opacity="0.6"/>
                     <!--
                     <Style TargetType="Button">
                         <Setter Property="Content">

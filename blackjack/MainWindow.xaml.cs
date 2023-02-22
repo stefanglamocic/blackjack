@@ -25,5 +25,11 @@ namespace blackjack
         {
             InitializeComponent();
         }
+
+        public static void UpdateWindowSize(int width, int height)
+        {
+            Application.Current.MainWindow.Width = width;
+            Application.Current.MainWindow.Height = height;
+        }
     }
 }

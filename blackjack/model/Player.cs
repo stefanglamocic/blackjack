@@ -1,22 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace blackjack.model
 {
-    class Player
+    class Player : INotifyPropertyChanged
     {
         private List<Card> drawnCards = new List<Card>();
         private int _total = 0;
-        public int Total { get => _total; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public int Total { get => _total; } //zbir vrijednosti karata
         public string Name { get; }
-        public int Balance { get; set; }
+        public int Balance { get; set; } // novac
 
         public Player(string name)
         {
             Name = name;
+            OnPropertyChanged();
         }
 
         public void Hit(Deck deck)
@@ -29,6 +35,7 @@ namespace blackjack.model
             {
                 _total -= 10;
             }
+            OnPropertyChanged();
         }
 
         private Boolean ScanForAce()
@@ -40,6 +47,11 @@ namespace blackjack.model
                     return true;
                 }
             return false;
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

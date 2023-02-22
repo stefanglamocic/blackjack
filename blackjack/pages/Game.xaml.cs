@@ -27,8 +27,10 @@ namespace blackjack.pages
         public Game(string playerName)
         {
             InitializeComponent();
+            MainWindow.UpdateWindowSize(1024, 768);
             player = new Player(playerName);
             dealer = new Dealer();
+            DataContext = player;
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
