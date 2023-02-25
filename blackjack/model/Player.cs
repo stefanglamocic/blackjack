@@ -12,17 +12,25 @@ namespace blackjack.model
     {
         private List<Card> drawnCards = new List<Card>();
         private int _total = 0;
+        private int _balance;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public List<Card> DrawnCards { get { return drawnCards; } }
         public int Total { get => _total; } //zbir vrijednosti karata
         public string Name { get; }
-        public int Balance { get; set; } // novac
+        public int Balance { get
+            { return _balance; }
+            set 
+            {
+                _balance = value;
+                OnPropertyChanged();
+            } } // novac
 
         public Player(string name)
         {
             Name = name;
-            OnPropertyChanged();
+            Balance = 10000;
         }
 
         public void Hit(Deck deck)
@@ -35,7 +43,6 @@ namespace blackjack.model
             {
                 _total -= 10;
             }
-            OnPropertyChanged();
         }
 
         private Boolean ScanForAce()

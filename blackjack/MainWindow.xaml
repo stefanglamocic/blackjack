@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Source="/pages/Home.xaml"
         Title="Blackjack" Height="650" Width="950"
-        ShowsNavigationUI="False">
+        ShowsNavigationUI="False"
+        >
     
 </NavigationWindow>
