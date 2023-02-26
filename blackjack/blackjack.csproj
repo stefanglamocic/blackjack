@@ -282,5 +282,17 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\chipBlackWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\chipGreenWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\chipBlueWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\chipRedWhite.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

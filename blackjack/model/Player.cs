@@ -13,24 +13,34 @@ namespace blackjack.model
         private List<Card> drawnCards = new List<Card>();
         private int _total = 0;
         private int _balance;
+        private int _bet;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public List<Card> DrawnCards { get { return drawnCards; } }
         public int Total { get => _total; } //zbir vrijednosti karata
         public string Name { get; }
-        public int Balance { get
-            { return _balance; }
+        public int Balance {
+            get => _balance;
             set 
             {
                 _balance = value;
                 OnPropertyChanged();
             } } // novac
+        public int Bet {
+            get => _bet;
+            set
+            {
+                _bet = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Player(string name)
         {
             Name = name;
             Balance = 10000;
+            Bet = 0;
         }
 
         public void Hit(Deck deck)

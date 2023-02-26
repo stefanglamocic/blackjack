@@ -55,10 +55,10 @@ namespace blackjack.pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             player.Hit(deck);
-            dealer.Hit(deck);
+            player.Hit(deck);
 
             AddCardToCanvas(PlayerCanvas, 0);
-            AddCardToCanvas(DealerCanvas, 0);
+            AddCardToCanvas(PlayerCanvas, 1);
         }
 
         private void AddCardToCanvas(Canvas canvas, int index)

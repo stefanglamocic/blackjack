@@ -8,6 +8,29 @@
       d:DesignHeight="768" d:DesignWidth="1024"
       Title="Game"
       >
+    <Page.Resources>
+        <Style 
+            TargetType="{x:Type Button}"
+            x:Key="RedButton">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Width" Value="42"/>
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="Margin" Value="6 0"/>
+        </Style>
+        <Style 
+            TargetType="{x:Type Button}"
+            x:Key="GreenButton"
+            BasedOn="{StaticResource RedButton}">
+            <Setter Property="Foreground" Value="Green"/>
+        </Style>
+        <Style
+            TargetType="{x:Type TextBlock}"
+            x:Key="ChipValue">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Page.Resources>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -45,7 +68,7 @@
                 Grid.Column="2"
                 Source="/assets/back.png"
                 HorizontalAlignment="Left"
-                Margin="30 0"
+                Margin="30 18 0 0"
                 Height="94"
                 />
             <TextBlock
@@ -95,22 +118,212 @@
                 x:Name="DealerCanvas"
                 Grid.Row="2"
                 Grid.Column="1"
-                Margin="130 40 130 0"
+                Margin="0 40 160 0"
+                HorizontalAlignment="Center"
                 />
             <Canvas
                 x:Name="PlayerCanvas"
                 Grid.Row="5"
                 Grid.Column="1"
-                Margin="130 10 130 0"
+                Margin="0 10 160 0"
+                HorizontalAlignment="Center"
                 />
+            <StackPanel
+                Grid.Row="6"
+                Grid.Column="1"
+                Orientation="Horizontal"
+                Margin="0 60 0 10"
+                HorizontalAlignment="Center"
+                Background="{StaticResource ChipsBackgroundColor}"
+                >
+                <Button Template="{StaticResource RoundButton}">
+                    <Button.Style>
+                        <Style 
+                            TargetType="{x:Type Button}"
+                            BasedOn="{StaticResource RedButton}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock Text="-1000" Style="{StaticResource ChipValue}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/assets/chipBlackWhite.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
 
-            <Button
+                <Button Template="{StaticResource RoundButton}">
+                    <Button.Style>
+                        <Style 
+                            TargetType="{x:Type Button}"
+                            BasedOn="{StaticResource RedButton}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock Text="-100" Style="{StaticResource ChipValue}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/assets/chipGreenWhite.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button Template="{StaticResource RoundButton}">
+                    <Button.Style>
+                        <Style 
+                            TargetType="{x:Type Button}"
+                            BasedOn="{StaticResource RedButton}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock Text="-50" Style="{StaticResource ChipValue}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/assets/chipBlueWhite.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button Template="{StaticResource RoundButton}">
+                    <Button.Style>
+                        <Style 
+                            TargetType="{x:Type Button}"
+                            BasedOn="{StaticResource RedButton}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock Text="-10" Style="{StaticResource ChipValue}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/assets/chipRedWhite.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Separator 
+                    Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"
+                    Width="2"
+                    Height="48"
+                    Background="{StaticResource YellowDark}"/>
+
+                <Button Template="{StaticResource RoundButton}">
+                    <Button.Style>
+                        <Style 
+                            TargetType="{x:Type Button}"
+                            BasedOn="{StaticResource GreenButton}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock Text="+10" Style="{StaticResource ChipValue}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/assets/chipRedWhite.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button Template="{StaticResource RoundButton}">
+                    <Button.Style>
+                        <Style 
+                            TargetType="{x:Type Button}"
+                            BasedOn="{StaticResource GreenButton}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock Text="+50" Style="{StaticResource ChipValue}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/assets/chipBlueWhite.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button Template="{StaticResource RoundButton}">
+                    <Button.Style>
+                        <Style 
+                            TargetType="{x:Type Button}"
+                            BasedOn="{StaticResource GreenButton}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock Text="+100" Style="{StaticResource ChipValue}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/assets/chipGreenWhite.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button Template="{StaticResource RoundButton}">
+                    <Button.Style>
+                        <Style 
+                            TargetType="{x:Type Button}"
+                            BasedOn="{StaticResource GreenButton}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <TextBlock Text="+1000" Style="{StaticResource ChipValue}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/assets/chipBlackWhite.png"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+
+            <StackPanel
                 Grid.Row="7"
                 Grid.Column="1"
+                Margin="60 20"
+                >
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock 
+                        Text="Bet:"
+                        Foreground="{StaticResource BorderColor}"
+                        FontWeight="Bold"
+                        FontSize="28"
+                        Margin="0 0 0 30"
+                        />
+                    <TextBlock
+                        Foreground="{StaticResource YellowLight}"
+                        FontSize="28"
+                        Margin="6 0"
+                        Text="{Binding Bet}"
+                        />
+                </StackPanel>
+
+                <Button
                 Height="40"
                 Width="180"
                 Content="Click"
                 Click="Button_Click"/>
+            </StackPanel>
         </Grid>
     </DockPanel>
 </Page>

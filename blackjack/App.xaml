@@ -26,6 +26,12 @@
             <GradientStop Color="#FF530D04" Offset="1.0"/>
         </LinearGradientBrush>
 
+        <LinearGradientBrush x:Key="ChipsBackgroundColor" StartPoint="0,0.5" EndPoint="1,0.5">
+            <GradientStop Color="#FF530D04" Offset="0"/>
+            <GradientStop Color="#FF8F6C2E" Offset="0.5"/>
+            <GradientStop Color="#FF530D04" Offset="1"/>
+        </LinearGradientBrush>
+
         <ControlTemplate x:Key="RoundButton" TargetType="Button">
             <Grid>
                 <Ellipse Fill="{TemplateBinding Background}"/>
@@ -35,6 +41,7 @@
             <ControlTemplate.Triggers>
                 <Trigger Property="Button.IsMouseOver" Value="True">
                     <Setter TargetName="Border" Property="Opacity" Value="1"/>
+                    <Setter TargetName="Border" Property="StrokeThickness" Value="1.2"/>
                 </Trigger>
                 <Trigger Property="Button.IsPressed" Value="True">
                     <Setter TargetName="Border" Property="Opacity" Value="0.7"/>
