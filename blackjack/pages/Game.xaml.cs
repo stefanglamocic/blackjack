@@ -61,6 +61,21 @@ namespace blackjack.pages
             AddCardToCanvas(PlayerCanvas, 1);
         }
 
+        private void Chip_Click(object sender, RoutedEventArgs e)
+        {
+            int chipValue = Int32.Parse(((TextBlock)((Button)sender).Content).Text);
+            if(chipValue < 0 && player.Bet >= -chipValue)
+            {
+                player.Bet += chipValue;
+                player.Balance -= chipValue;
+            }
+            else if(chipValue > 0 && player.Balance >= chipValue)
+            {
+                player.Bet += chipValue;
+                player.Balance -= chipValue;
+            }
+        }
+
         private void AddCardToCanvas(Canvas canvas, int index)
         {
             var person = canvas.Equals(PlayerCanvas) ? player : dealer;
