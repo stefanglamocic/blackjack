@@ -35,6 +35,8 @@ namespace blackjack.pages
             dealer = new Dealer();
             deck = new Deck();
             DataContext = player;
+            HitStandStack.Visibility = Visibility.Hidden;
+            InfoStack.Visibility = Visibility.Hidden;
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
@@ -54,11 +56,7 @@ namespace blackjack.pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            player.Hit(deck);
-            player.Hit(deck);
-
-            AddCardToCanvas(PlayerCanvas, 0);
-            AddCardToCanvas(PlayerCanvas, 1);
+            
         }
 
         private void Chip_Click(object sender, RoutedEventArgs e)
@@ -69,10 +67,20 @@ namespace blackjack.pages
                 player.Bet += chipValue;
                 player.Balance -= chipValue;
             }
+            else if(chipValue < 0 && player.Bet < -chipValue)
+            {
+                player.Balance += player.Bet;
+                player.Bet = 0;
+            }
             else if(chipValue > 0 && player.Balance >= chipValue)
             {
                 player.Bet += chipValue;
                 player.Balance -= chipValue;
+            }
+            else if(chipValue > 0 && player.Balance < chipValue)
+            {
+                player.Bet += player.Balance;
+                player.Balance = 0;
             }
         }
 
@@ -88,12 +96,48 @@ namespace blackjack.pages
                 Child = new Image
                 {
                     Height = 94,
-                    Source = new BitmapImage(new Uri("pack://application:,,,/" + person.DrawnCards[index].ImagePath))
+                    Source = (canvas.Equals(DealerCanvas) && index == 1) ?
+                        new BitmapImage(new Uri("pack://application:,,,/assets/back.png")) :
+                        new BitmapImage(new Uri("pack://application:,,,/" + person.DrawnCards[index].ImagePath))
                 }
             };
 
             Canvas.SetLeft(b, index * 32);
             canvas.Children.Add(b);
+        }
+
+        private void RevealHiddenCard()
+        {
+            Border b = (Border)DealerCanvas.Children[1];
+            b.Child = new Image
+            {
+                Height = 94,
+                Source = new BitmapImage(new Uri("pack://application:,,,/" + dealer.DrawnCards[1].ImagePath))
+            };
+        }
+
+        private void DisableChipButtons()
+        {
+            foreach(var b in ChipsStack.Children)
+            {
+                if (b is Button button)
+                    button.IsEnabled = false;
+            }
+        }
+
+        private void DealButton_Click(object sender, RoutedEventArgs e)
+        {
+            dealer.Hit(deck);
+            dealer.Hit(deck);
+
+            AddCardToCanvas(DealerCanvas, 0);
+            AddCardToCanvas(DealerCanvas, 1);
+
+            RevealHiddenCard();
+
+            HitStandStack.Visibility = Visibility.Visible;
+
+            ChipsStack.Visibility = Visibility.Hidden;
         }
     }
 }

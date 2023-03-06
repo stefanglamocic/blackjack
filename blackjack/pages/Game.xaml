@@ -9,6 +9,24 @@
       Title="Game"
       >
     <Page.Resources>
+        <Style
+            TargetType="{x:Type Button}"
+            x:Key="StandButton"
+            >
+            <Setter Property="Height" Value="56"/>
+            <Setter Property="Width" Value="56"/>
+            <Setter Property="Background" Value="Red"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="16 0"/>
+        </Style>
+        <Style
+            TargetType="{x:Type Button}"
+            x:Key="HitButton"
+            BasedOn="{StaticResource StandButton}"
+            >
+            <Setter Property="Background" Value="Green"/>
+        </Style>
         <Style 
             TargetType="{x:Type Button}"
             x:Key="RedButton">
@@ -31,6 +49,38 @@
             <Setter Property="FontSize" Value="11"/>
             <Setter Property="Foreground" Value="White"/>
         </Style>
+        <ControlTemplate
+            x:Key="CardButton"
+            TargetType="Button">
+            <Grid>
+                <Rectangle x:Name="Background" Fill="{TemplateBinding Background}"/>
+                <Border x:Name="Border" 
+                        BorderBrush="{TemplateBinding Foreground}" 
+                        BorderThickness="1.4"
+                        CornerRadius="3"/>
+                <ContentPresenter
+                    x:Name="Content"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger
+                    Property="Button.IsMouseOver"
+                    Value="True">
+                    <Setter TargetName="Background" Property="Opacity" Value="1"/>
+                </Trigger>
+                <Trigger
+                    Property="Button.IsMouseOver"
+                    Value="False">
+                    <Setter TargetName="Background" Property="Opacity" Value="0.85"/>
+                </Trigger>
+                <Trigger
+                    Property="Button.IsPressed"
+                    Value="True">
+                    <Setter TargetName="Border" Property="Opacity" Value="0.6"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
     </Page.Resources>
 
     <DockPanel>
@@ -64,14 +114,36 @@
                 Grid.Row="1"
                 Source="/assets/table.png" 
                 Stretch="Fill"/>
-            <Image
+            <Button
                 Grid.Row="3"
                 Grid.Column="2"
-                Source="/assets/back.png"
                 HorizontalAlignment="Left"
                 Margin="30 18 0 0"
                 Height="94"
-                />
+                Width="67"
+                Template="{StaticResource CardButton}"
+                x:Name="DealButton"
+                Click="DealButton_Click"
+                >
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Content">
+                            <Setter.Value>
+                                <TextBlock 
+                                    Text="Deal" 
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Foreground="{StaticResource BorderColor}"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <ImageBrush ImageSource="/assets/back.png"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
             <TextBlock
                 Grid.Column="1"
                 Grid.Row="1"
@@ -115,6 +187,31 @@
                     />
                 </StackPanel>
             </Border>
+            <Border 
+                Grid.Row="7"
+                Grid.Column="2"
+                BorderBrush="{StaticResource YellowDark}"
+                BorderThickness="2"
+                Margin="46"
+                CornerRadius="6"
+                >
+                <StackPanel >
+                    <TextBlock
+                    Margin="24 12"
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource BorderColor}"
+                    FontWeight="Bold"
+                    Text="Bet"
+                    FontSize="24"
+                    />
+                    <TextBlock
+                    FontSize="20"
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource YellowLight}"
+                    Text="{Binding Bet}"
+                    />
+                </StackPanel>
+            </Border>
             <Canvas
                 x:Name="DealerCanvas"
                 Grid.Row="2"
@@ -136,6 +233,7 @@
                 Margin="0 60 0 10"
                 HorizontalAlignment="Center"
                 Background="{StaticResource ChipsBackgroundColor}"
+                x:Name="ChipsStack"
                 >
                 <Button Template="{StaticResource RoundButton}">
                     <Button.Style>
@@ -296,34 +394,58 @@
                 </Button>
             </StackPanel>
 
-            <StackPanel
+            <Border
                 Grid.Row="7"
                 Grid.Column="1"
-                Margin="60 20"
+                Background="{StaticResource HitStandColor}"
+                x:Name="HitStandStack"
+                Height="64"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                CornerRadius="26"
                 >
                 <StackPanel
-                    HorizontalAlignment="Center"
-                    Orientation="Horizontal">
-                    <TextBlock 
-                        Text="Bet:"
-                        Foreground="{StaticResource BorderColor}"
-                        FontWeight="Bold"
-                        FontSize="28"
-                        Margin="0 0 0 30"
-                        />
-                    <TextBlock
-                        Foreground="{StaticResource YellowLight}"
-                        FontSize="28"
-                        Margin="6 0"
-                        Text="{Binding Bet}"
-                        />
+                Orientation="Horizontal"
+                >
+                    <Rectangle Width="8"/>
+                    <Button 
+                    Template="{StaticResource RoundButton}"
+                    Style="{StaticResource StandButton}"
+                    x:Name="StandButton"
+                    >
+                        STAND
+                    </Button>
+                    <Button 
+                    Template="{StaticResource RoundButton}"
+                    Style="{StaticResource HitButton}"
+                    x:Name="HitButton"
+                    >
+                        HIT
+                    </Button>
+                    <Rectangle Width="8"/>
                 </StackPanel>
+            </Border>
 
-                <Button
-                Height="40"
-                Width="180"
-                Content="Click"
-                Click="Button_Click"/>
+            <StackPanel
+                Grid.Row="3"
+                Grid.Column="1"
+                Orientation="Vertical"
+                HorizontalAlignment="Center"
+                x:Name="InfoStack"
+                >
+                <TextBlock
+                    FontSize="58"
+                    HorizontalAlignment="Center"
+                    Foreground="{StaticResource Green}"
+                    x:Name="WinnerInfo"
+                    />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="48"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource Green}"
+                    x:Name="WinningInfo"
+                    />
             </StackPanel>
         </Grid>
     </DockPanel>

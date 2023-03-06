@@ -32,6 +32,12 @@
             <GradientStop Color="#FF530D04" Offset="1"/>
         </LinearGradientBrush>
 
+        <LinearGradientBrush x:Key="HitStandColor" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="0.4">
+            <GradientStop Color="#FF530D04" Offset="0"/>
+            <GradientStop Color="#FF21100E" Offset="0.5"/>
+            <GradientStop Color="#FF530D04" Offset="1"/>
+        </LinearGradientBrush>
+
         <ControlTemplate x:Key="RoundButton" TargetType="Button">
             <Grid>
                 <Ellipse Fill="{TemplateBinding Background}"/>
