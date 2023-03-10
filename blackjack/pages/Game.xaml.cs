@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,10 +34,9 @@ namespace blackjack.pages
             MainWindow.UpdateWindowSize(1180, 930);
             player = new Player(playerName);
             dealer = new Dealer();
-            deck = new Deck();
+            
             DataContext = player;
-            HitStandStack.Visibility = Visibility.Hidden;
-            InfoStack.Visibility = Visibility.Hidden;
+            PrepareForNewDealing();
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
@@ -52,11 +52,6 @@ namespace blackjack.pages
         private void New_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Game(player.Name));
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
 
         private void Chip_Click(object sender, RoutedEventArgs e)
@@ -125,19 +120,137 @@ namespace blackjack.pages
             }
         }
 
-        private void DealButton_Click(object sender, RoutedEventArgs e)
+        private async void DealButton_Click(object sender, RoutedEventArgs e)
         {
-            dealer.Hit(deck);
-            dealer.Hit(deck);
+            if (player.Bet <= 0)
+                return;
+            DealButton.IsEnabled = false;
+            player.DrawnCards.Clear();
+            dealer.DrawnCards.Clear();
+            deck = new Deck();
+            ChipsStack.Visibility = Visibility.Hidden;
 
-            AddCardToCanvas(DealerCanvas, 0);
-            AddCardToCanvas(DealerCanvas, 1);
+            for (int i = 0; i < 2; i++)
+            {
+                player.Hit(deck);
+                AddCardToCanvas(PlayerCanvas, i);
+                await Task.Run(() => Thread.Sleep(1000));
 
-            RevealHiddenCard();
+                dealer.Hit(deck);
+                AddCardToCanvas(DealerCanvas, i);
+                if(i < 1)
+                    await Task.Run(() => Thread.Sleep(1000));
+            }
+
+            if(player.Total == 21)
+            {
+                await PlayerWonBlackjack();
+                return;
+            }
 
             HitStandStack.Visibility = Visibility.Visible;
+        }
 
-            ChipsStack.Visibility = Visibility.Hidden;
+        private void PrepareForNewDealing()
+        {
+            PlayerCanvas.Children.Clear();
+            DealerCanvas.Children.Clear();
+            HitStandStack.Visibility = Visibility.Hidden;
+            InfoStack.Visibility = Visibility.Hidden;
+            ChipsStack.Visibility = Visibility.Visible;
+            player.ClearData();
+            dealer.ClearData();
+            DealButton.IsEnabled = true;
+        }
+
+        private async Task PlayerWonBlackjack()
+        {
+            ResultTextBlock.Foreground = Application.Current.Resources["TitleColor"] as LinearGradientBrush;
+            ResultTextBlock.Text = "Blackjack";
+            ResultTextBlock.Visibility = Visibility.Visible;
+            await Task.Run(() => Thread.Sleep(1500));
+            ResultTextBlock.Visibility = Visibility.Hidden;
+
+            DisplayPlayerWinInfo();
+            player.Balance += 2 * player.Bet;
+            player.Bet = 0;
+            await Task.Run(() => Thread.Sleep(2500));
+
+            PrepareForNewDealing();
+        }
+
+        private void DisplayPlayerWinInfo()
+        {
+            WinnerInfo.Text = $"{player.Name} won";
+            WinningInfo.Text = $"{2 * player.Bet}";
+            InfoStack.Visibility = Visibility.Visible;
+        }
+
+        private void DisplayDealerWinInfo()
+        {
+            WinnerInfo.Text = $"{dealer.Name} won";
+            WinningInfo.Text = $"{player.Bet}";
+            InfoStack.Visibility = Visibility.Visible;
+        }
+
+        private void DisableStandHit()
+        {
+            StandButton.IsEnabled = false;
+            HitButton.IsEnabled = false;
+        }
+
+        private void EnableStandHit()
+        {
+            StandButton.IsEnabled = true;
+            HitButton.IsEnabled = true;
+        }
+
+        private async void StandButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisableStandHit();
+            RevealHiddenCard();
+            dealer.FinishDrawing(deck);
+            for(int i = 2; i < dealer.DrawnCards.Count; i++)
+            {
+                await Task.Run(() => Thread.Sleep(1000));
+                AddCardToCanvas(DealerCanvas, i);
+            }
+
+            if (player.Total >= dealer.Total || dealer.Total > 21)
+            {
+                DisplayPlayerWinInfo();
+                player.Balance += 2 * player.Bet;
+                player.Bet = 0;
+            }
+            else
+                DisplayDealerWinInfo();
+            await Task.Run(() => Thread.Sleep(2500));
+
+            PrepareForNewDealing();
+            EnableStandHit();
+        }
+
+        private async void HitButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisableStandHit();
+            player.Hit(deck);
+            AddCardToCanvas(PlayerCanvas, PlayerCanvas.Children.Count);
+            if(player.Total == 21)
+            {
+                await PlayerWonBlackjack();
+            }
+            else if(player.Total > 21)
+            {
+                ResultTextBlock.Foreground = Brushes.Red;
+                ResultTextBlock.Text = "Bust";
+                ResultTextBlock.Visibility = Visibility.Visible;
+                await Task.Run(() => Thread.Sleep(1500));
+                ResultTextBlock.Visibility = Visibility.Hidden;
+                DisplayDealerWinInfo();
+                await Task.Run(() => Thread.Sleep(2500));
+                PrepareForNewDealing();
+            }
+            EnableStandHit();
         }
     }
 }

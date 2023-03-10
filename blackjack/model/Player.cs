@@ -66,6 +66,12 @@ namespace blackjack.model
             return false;
         }
 
+        public void ClearData()
+        {
+            Bet = 0;
+            _total = 0;
+        }
+
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -409,16 +409,18 @@
                 >
                     <Rectangle Width="8"/>
                     <Button 
-                    Template="{StaticResource RoundButton}"
-                    Style="{StaticResource StandButton}"
-                    x:Name="StandButton"
+                        Template="{StaticResource RoundButton}"
+                        Style="{StaticResource StandButton}"
+                        x:Name="StandButton"
+                        Click="StandButton_Click"
                     >
                         STAND
                     </Button>
                     <Button 
-                    Template="{StaticResource RoundButton}"
-                    Style="{StaticResource HitButton}"
-                    x:Name="HitButton"
+                        Template="{StaticResource RoundButton}"
+                        Style="{StaticResource HitButton}"
+                        x:Name="HitButton"
+                        Click="HitButton_Click"
                     >
                         HIT
                     </Button>
@@ -426,6 +428,15 @@
                 </StackPanel>
             </Border>
 
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="1"
+                FontSize="75"
+                FontWeight="Bold"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                x:Name="ResultTextBlock"
+                />
             <StackPanel
                 Grid.Row="3"
                 Grid.Column="1"
