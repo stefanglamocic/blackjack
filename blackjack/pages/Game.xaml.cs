@@ -99,6 +99,10 @@ namespace blackjack.pages
 
             Canvas.SetLeft(b, index * 32);
             canvas.Children.Add(b);
+            if (person.Equals(player))
+                PlayerTotalInfo.Text = player.Total.ToString();
+            else
+                DealerTotalInfo.Text = dealer.Total.ToString();
         }
 
         private void RevealHiddenCard()
@@ -161,6 +165,15 @@ namespace blackjack.pages
             player.ClearData();
             dealer.ClearData();
             DealButton.IsEnabled = true;
+            PlayerTotalInfo.Text = player.Total.ToString();
+            DealerTotalInfo.Text = dealer.Total.ToString();
+
+            if (player.Balance == 0)
+            {
+                ResultTextBlock.Foreground = Brushes.Red;
+                ResultTextBlock.Text = "TAP OUT";
+                ResultTextBlock.Visibility = Visibility.Visible;
+            }
         }
 
         private async Task PlayerWonBlackjack()

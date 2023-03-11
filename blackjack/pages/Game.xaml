@@ -144,25 +144,59 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <TextBlock
+            <StackPanel
                 Grid.Column="1"
                 Grid.Row="1"
-                Foreground="{StaticResource YellowDark}"
                 HorizontalAlignment="Center"
-                FontWeight="Bold"
-                FontSize="19"
-                Text="Dealer"
-                />
-            <TextBlock
+                Orientation="Horizontal"
+                >
+                <TextBlock
+                    Foreground="{StaticResource YellowDark}"
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    FontSize="19"
+                    Text="Dealer"
+                    />
+                <TextBlock
+                    x:Name="DealerTotalInfo"
+                    Margin="4 0"
+                    FontWeight="Bold"
+                    FontSize="19"
+                    Foreground="{StaticResource BorderColor}"
+                    Background="{StaticResource YellowDark}"
+                    Width="22"
+                    TextAlignment="Center"
+                    Text="0"
+                    />
+            </StackPanel>
+            <StackPanel
                 Grid.Row="4"
                 Grid.Column="1"
-                Foreground="{StaticResource YellowLight}"
                 HorizontalAlignment="Center"
-                FontWeight="Bold"
-                FontSize="27"
-                TextDecorations="Underline"
-                Text="{Binding Name}"
+                Orientation="Horizontal"
+                >
+                <TextBlock
+                    Foreground="{StaticResource YellowLight}"
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    FontSize="27"
+                    TextDecorations="Underline"
+                    Text="{Binding Name}"
                 />
+                <TextBlock
+                    x:Name="PlayerTotalInfo"
+                    Margin="4 0"
+                    FontWeight="Bold"
+                    FontSize="19"
+                    Foreground="{StaticResource BorderColor}"
+                    Background="{StaticResource YellowDark}"
+                    Width="22"
+                    Height="28"
+                    TextAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="0"
+                    />
+            </StackPanel>
             <Border 
                 Grid.Row="7"
                 BorderBrush="{StaticResource YellowDark}"
