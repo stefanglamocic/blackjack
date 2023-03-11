@@ -159,6 +159,7 @@ namespace blackjack.pages
         {
             PlayerCanvas.Children.Clear();
             DealerCanvas.Children.Clear();
+            DealerTotalInfo.Visibility = Visibility.Hidden;
             HitStandStack.Visibility = Visibility.Hidden;
             InfoStack.Visibility = Visibility.Hidden;
             ChipsStack.Visibility = Visibility.Visible;
@@ -222,6 +223,7 @@ namespace blackjack.pages
         {
             DisableStandHit();
             RevealHiddenCard();
+            DealerTotalInfo.Visibility = Visibility.Visible;
             dealer.FinishDrawing(deck);
             for(int i = 2; i < dealer.DrawnCards.Count; i++)
             {
